@@ -46,14 +46,14 @@ const Login = () => {
 	useEffect(() => {
 		if (Object.keys(formErrors).length === 0 && isSubmit) {
 			console.log(user);
-			axios.post("http://localhost:8000/api/loginUser", user).then((res) => {
+			axios.post("http://localhost:8000/api/login", user).then((res) => {
 				console.log(res);
 				alert(res.data.message);
 				if (res.status == 401) {
 					return false;
 				}
 				else if (res.status == 200) {
-                navigate("/dashboard", { state: { user: res.data.user } });
+                navigate("/dashboard", { state: { user: res.data.user,token:res.data.token } });
 				}
 			});
 		}

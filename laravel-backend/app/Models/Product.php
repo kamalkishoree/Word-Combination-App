@@ -1,18 +1,16 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teacher extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'teacher';
-
     protected $fillable = [
         'name',
-        'age',
-        'sex'
+        'description'
     ];
 }

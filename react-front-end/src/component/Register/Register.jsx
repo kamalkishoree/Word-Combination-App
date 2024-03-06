@@ -14,7 +14,7 @@ const Register = () => {
     lname: "",
     email: "",
     password: "",
-    cpassword: "",
+    password_confirmation: "",
   });
 
   const changeHandler = (e) => {
@@ -46,10 +46,10 @@ const Register = () => {
     } else if (values.password.length > 10) {
       error.password = "Password cannot exceed more than 10 characters";
     }
-    if (!values.cpassword) {
+    if (!values.password_confirmation) {
       error.cpassword = "Confirm Password is required";
-    } else if (values.cpassword !== values.password) {
-      error.cpassword = "Confirm password and password should be same";
+    } else if (values.password_confirmation !== values.password) {
+      error.password_confirmation = "Confirm password and password should be same";
     }
     return error;
   };
@@ -65,7 +65,7 @@ const Register = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
-      axios.post("http://localhost:8000/api/signup/", user).then((res) => {
+      axios.post("http://localhost:8000/api/register", user).then((res) => {
         alert(res.data.message);
         if(res.data.status == 500)
         {
@@ -118,13 +118,13 @@ const Register = () => {
           <p className={basestyle.error}>{formErrors.password}</p>
           <input
             type="password"
-            name="cpassword"
+            name="password_confirmation"
             id="cpassword"
             placeholder="Confirm Password"
             onChange={changeHandler}
-            value={user.cpassword}
+            value={user.password_confirmation}
           />
-          <p className={basestyle.error}>{formErrors.cpassword}</p>
+          <p className={basestyle.error}>{formErrors.password_confirmation}</p>
           <button className={basestyle.button_common} onClick={signupHandler}>
             Register
           </button>

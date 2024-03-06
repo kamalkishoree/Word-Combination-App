@@ -5,27 +5,27 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-export default function TextCombo() {
-
+import { useLocation, useNavigate } from "react-router-dom";
+export default function TextCombo({Accesstoken}) {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const token = location.state ? location.state.token : null;
+    console.log(location);
+
 	const [text, setText] = useState("");
-
 	const [wordCombo, SetWordCombo] = useState([]);
-
 	const [validationError, setValidationError] = useState({});
-
-
-
 	const createProduct = async (e) => {
 		e.preventDefault();
-
 		const formData = new FormData();
-
 		formData.append("name", text);
-
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
 		await axios
-			.post(`http://localhost:8000/api/words-combo`, formData)
+			.post(`http://localhost:8000/api/words-combo`, formData,config)
 			.then(({ data }) => {
 				navigate("/seach_result", { state: { search_data: data.search_word,word_combination:data.word_combination,status:data.status} });
 
@@ -41,7 +41,6 @@ export default function TextCombo() {
 				}
 			});
 	};
-
 	return (
 		<div className="w-100">
 			<div className="row justify-content-center">

@@ -1,79 +1,16 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Models\SearchWordQuery;
 use App\Models\wordsCombination;
 
-class UserController extends Controller
+
+class WordCombinationController extends Controller
 {
-
-    public function signUp(Request $request)
-    {
-        if (! empty($request->all())) {
-
-            try {
-                $user = User::create([
-                    'name' => $request->fname . "" . $request->lname,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password)
-                ]);
-
-                if ($user) {
-                    $response = [
-                        'message' => "User Ceated Succwesfully",
-                        'user' => $user
-                    ];
-                    return response()->json($response);
-                }
-            } catch (\Exception $e) {
-
-                \Log::error($e->getMessage());
-
-                $response = [
-                    'message' => $e->getMessage(),
-                    'status' => 500
-                ];
-                return response()->json($response);
-            }
-        }
-    }
-
-    public function loginUser(Request $request)
-    {
-        if (! empty($request->all())) {
-
-            $user = User::where('email', $request->email)->first();
-            if (! $user) {
-                $response = [
-                    'message' => "User is not registered",
-                    'status' => 401
-                ];
-                return response()->json($response);
-            } else {
-                $credentials = $request->only('email', 'password');
-                if (Auth::attempt($credentials)) {
-                    $response = [
-                        'message' => "User Loged In",
-                        'status' => 200,
-                        'user' => $user
-                    ];
-                } else {
-                    $response = [
-                        'message' => "Invalid login",
-                        'status' => 400
-                    ];
-                }
-
-                return response()->json($response);
-            }
-        }
-    }
 
     public function wordCollection(Request $request)
     {
@@ -90,7 +27,7 @@ class UserController extends Controller
             $exist_wordCombination = $exist_search_word->wordCombination;
             $response = [
                 'search_word' => $request->name,
-                'word_combination' => explode(', ',$exist_wordCombination->result_words),
+                'word_combination' => explode(', ', $exist_wordCombination->result_words),
                 'status' => 200
             ];
             return response()->json($response);
@@ -122,7 +59,7 @@ class UserController extends Controller
                     if ($search_word->save()) {
                         $response = [
                             'search_word' => $request->name,
-                            'word_combination' => explode(',',$word_combination->result_words),
+                            'word_combination' => explode(',', $word_combination->result_words),
                             'status' => 200
                         ];
                         return response()->json($response);
@@ -174,4 +111,3 @@ class UserController extends Controller
         return $data_array;
     }
 }
-    
