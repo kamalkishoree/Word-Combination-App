@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import basestyle from "../Base.module.css";
-import registerstyle from "./Register.module.css";
+
 import axios from "axios";
 
 import { useNavigate, NavLink } from "react-router-dom";
+import RegisterView from "./RegisterView";
 const Register = () => {
   const navigate = useNavigate();
 
@@ -49,7 +49,8 @@ const Register = () => {
     if (!values.password_confirmation) {
       error.cpassword = "Confirm Password is required";
     } else if (values.password_confirmation !== values.password) {
-      error.password_confirmation = "Confirm password and password should be same";
+      error.password_confirmation =
+        "Confirm password and password should be same";
     }
     return error;
   };
@@ -67,71 +68,20 @@ const Register = () => {
       console.log(user);
       axios.post("http://localhost:8000/api/register", user).then((res) => {
         alert(res.data.message);
-        if(res.data.status == 500)
-        {
-			return false;
-		}
+        if (res.data.status == 500) {
+          return false;
+        }
         navigate("/login", { replace: true });
       });
     }
   }, [formErrors]);
   return (
-    <>
-      <div className={registerstyle.register}>
-        <form>
-          <h1>Create your account</h1>
-          <input
-            type="text"
-            name="fname"
-            id="fname"
-            placeholder="First Name"
-            onChange={changeHandler}
-            value={user.fname}
-          />
-          <p className={basestyle.error}>{formErrors.fname}</p>
-          <input
-            type="text"
-            name="lname"
-            id="lname"
-            placeholder="Last Name"
-            onChange={changeHandler}
-            value={user.lname}
-          />
-          <p className={basestyle.error}>{formErrors.lname}</p>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            onChange={changeHandler}
-            value={user.email}
-          />
-          <p className={basestyle.error}>{formErrors.email}</p>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            onChange={changeHandler}
-            value={user.password}
-          />
-          <p className={basestyle.error}>{formErrors.password}</p>
-          <input
-            type="password"
-            name="password_confirmation"
-            id="cpassword"
-            placeholder="Confirm Password"
-            onChange={changeHandler}
-            value={user.password_confirmation}
-          />
-          <p className={basestyle.error}>{formErrors.password_confirmation}</p>
-          <button className={basestyle.button_common} onClick={signupHandler}>
-            Register
-          </button>
-        </form>
-        <NavLink to="/login">Already registered? Login</NavLink>
-      </div>
-    </>
+    <RegisterView
+      changeHandler={changeHandler}
+      signupHandler={signupHandler}
+      user={user}
+      formErrors={formErrors}
+    ></RegisterView>
   );
 };
 export default Register;
