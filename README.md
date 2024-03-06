@@ -1,5 +1,5 @@
 
-  # Installation : 1
+
  git clone https://github.com/kamalkishoree/Word-Combination-App.git
 
 # Installation steps for laravel-backend.
