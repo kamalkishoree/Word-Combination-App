@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import basestyle from "../Base.module.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SearchResult from "../SearchWord/SearchResult";
-import TextCombo from "../SearchWord/SearchWord";
+import SearchResult from "../text/SearchResult";
+import TextCombo from "../text/TextCombo";
+import ProfileView from "./ProfileView";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -42,16 +43,11 @@ const Profile = () => {
   }, [isSubmit, token, loginUser]); // Include token and loginUser in the dependencies array
 
   return (
-    <div className="profile">
-      <h1 style={{ color: "black" }}>Welcome {userData && userData.name}!!</h1>
-      <TextCombo toekn={token}></TextCombo>
-
-      <form>
-        <button className={basestyle.button_common} onClick={handleLogout}>
-          Logout
-        </button>
-      </form>
-    </div>
+    <ProfileView
+      handleLogout={handleLogout}
+      userData={userData}
+      token={token}
+    ></ProfileView>
   );
 };
 
