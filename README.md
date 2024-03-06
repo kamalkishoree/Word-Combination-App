@@ -66,16 +66,14 @@ http://localhost:8000/
 
   # Installation : 2
 
-# Installation steps for react-frontend.
-### Go to the project folder
+#  How to Install - Step by Step Guide : react-frontend.
 ```bash
 cd Word-Combination-App/react-front-end
 ```
 
-# How to Install - Step by Step Guide
+#
 
 1. Go to the project folder and run npm install
-   #### `cd my-first-project`
    #### `npm install`
 
 2. Now run your app in development
