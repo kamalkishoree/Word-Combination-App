@@ -1,5 +1,4 @@
 
-* https://laravel.com/docs/10/installation
   # Installation : 1
  git clone https://github.com/kamalkishoree/Word-Combination-App.git
 
@@ -62,9 +61,6 @@ php artisan serve
 ### Open local application
 
 http://localhost:8000/
-
-
-  # Installation : 2
 
 #  How to Install - Step by Step Guide : react-frontend.
 ```bash
