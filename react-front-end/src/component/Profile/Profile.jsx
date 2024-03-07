@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import basestyle from "../Base.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import SearchResult from "../text/SearchResult";
-import TextCombo from "../text/TextCombo";
 import ProfileView from "./ProfileView";
 
 const Profile = () => {

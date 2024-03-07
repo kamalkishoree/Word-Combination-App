@@ -1,19 +1,18 @@
+import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState } from "react";
-
-const SearchWordView = ({ validationError, createCombo }) => {
-  const [text, setText] = useState("");
+const SearchWordForm = ({ text, setText, validationError, handleSubmit }) => {
   return (
     <div className="w-100">
       <div className="row justify-content-center">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Enter all the letters :</h4>
+            <h4 className="card-title">
+              Enter all the letters from the puzzle or level number:{" "}
+            </h4>
             <hr />
-
             <div className="form-wrapper">
               {Object.keys(validationError).length > 0 && (
                 <div className="row">
@@ -28,17 +27,15 @@ const SearchWordView = ({ validationError, createCombo }) => {
                   </div>
                 </div>
               )}
-              <Form onSubmit={createCombo}>
+              <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col>
                     <Form.Group controlId="Name">
-                      <Form.Label></Form.Label>
+                      <Form.Label>Enter Letters:</Form.Label>
                       <Form.Control
                         type="text"
                         value={text}
-                        onChange={(event) => {
-                          setText(event.target.value);
-                        }}
+                        onChange={(event) => setText(event.target.value)}
                       />
                     </Form.Group>
                   </Col>
@@ -61,4 +58,4 @@ const SearchWordView = ({ validationError, createCombo }) => {
   );
 };
 
-export default SearchWordView;
+export default SearchWordForm;

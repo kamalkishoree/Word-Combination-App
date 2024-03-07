@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import SearchWordView from "./SearchWordView";
-export default function SearchWord({ Accesstoken }) {
+import SearchWordForm from "./SearchWordForm";
+
+export default function SearchWord() {
   const navigate = useNavigate();
   const location = useLocation();
   const token = location.state ? location.state.token : null;
   console.log(location);
 
   const [text, setText] = useState("");
-  const [wordCombo, SetWordCombo] = useState([]);
   const [validationError, setValidationError] = useState({});
-  const createCombo = async (e) => {
+
+  const createProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", text);
@@ -44,11 +44,13 @@ export default function SearchWord({ Accesstoken }) {
         }
       });
   };
+
   return (
-    <SearchWordView
-      createCombo={createCombo}
-      validationError={validationError}
+    <SearchWordForm
       text={text}
-    ></SearchWordView>
+      setText={setText}
+      validationError={validationError}
+      handleSubmit={createProduct}
+    />
   );
 }
