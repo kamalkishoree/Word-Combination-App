@@ -5,7 +5,7 @@ function SearchResultData({ searchStr, WordDataArray }) {
   return (
     <div>
       <div>
-        <h2> Result of combination words for Word : {searchStr}</h2>{" "}
+        <h2> Result of combination words for : {searchStr}</h2>{" "}
       </div>
       <table className="table table-bordered mb-0 text-center w-25">
         <thead>

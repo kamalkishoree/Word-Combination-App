@@ -12,6 +12,9 @@ import Register from "./component/Register/Register";
 import Profile from "./component/Profile/Profile";
 import SearchWord from "./component/WordCombination/SearchWordMain";
 import SearchResult from "./component/WordCombination/SearchResultMain";
+import UnAunthecate401 from "./component/ErrorComponent/UnAuthenticate401";
+import NotFound404 from "./component/ErrorComponent/NotFound404";
+
 function App() {
   return (
     <Router>
@@ -33,6 +36,9 @@ function App() {
               <Route path="/signup" element={<Register />} />
               <Route path="/text" element={<SearchWord />} />
               <Route path="/seach_result" element={<SearchResult />} />
+              <Route path="/401" element={<UnAunthecate401 />} />
+              <Route path="*" element={<NotFound404 />} />{" "}
+              {/* Catch-all route for 404 Not Found */}
             </Routes>
           </Col>
         </Row>

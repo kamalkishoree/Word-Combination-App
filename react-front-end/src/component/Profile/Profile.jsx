@@ -20,7 +20,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (loginUser === null) {
-      navigate("/login", { replace: true });
+      navigate("/401", { replace: true });
     }
     if (isSubmit) {
       const config = {

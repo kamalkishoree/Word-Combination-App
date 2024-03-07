@@ -1,4 +1,5 @@
 import basestyle from "../Base.module.css";
+import { LogoutComponent } from "../Login/LogoutMain";
 import SearchWord from "../WordCombination/SearchWordMain";
 const ProfileView = ({ handleLogout, userData, token }) => {
   return (
@@ -6,9 +7,7 @@ const ProfileView = ({ handleLogout, userData, token }) => {
       <h1 style={{ color: "black" }}>Welcome {userData && userData.name}!!</h1>
       <SearchWord token={token}></SearchWord>
       <form>
-        <button className={basestyle.button_common} onClick={handleLogout}>
-          Logout
-        </button>
+        <LogoutComponent handleLogout={handleLogout}></LogoutComponent>
       </form>
     </div>
   );
