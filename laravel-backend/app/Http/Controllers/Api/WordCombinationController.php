@@ -14,9 +14,6 @@ class WordCombinationController extends Controller
 
     public function wordCollection(Request $request)
     {
-       
-    
-
         $request->validate([
             'name' => 'required'
         ]);
