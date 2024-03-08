@@ -8,7 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 use App\Models\SearchWordQuery;
 use App\Models\wordsCombination;
 
-
 class WordCombinationController extends Controller
 {
 
