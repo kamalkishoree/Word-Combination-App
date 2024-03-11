@@ -3,20 +3,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use Symfony\Component\DomCrawler\Crawler;
 use App\Models\SearchWordQuery;
 use App\Models\wordsCombination;
+use App\Helpers\WordHelper;
+use App\Services\WordRequestService;
 
 class WordCombinationController extends Controller
 {
 
-    public function wordCollection(Request $request)
+    public function wordCollection(Request $request, WordRequestService $wordRequest)
     {
         $request->validate([
             'name' => 'required'
         ]);
-
         $Exist_SearchWordQuery = SearchWordQuery::whereRaw("FIND_IN_SET(?, REPLACE(permutation, ' ', ''))", [
             $request->name
         ])->where('word_length', strlen($request->name))->first();
@@ -32,19 +31,9 @@ class WordCombinationController extends Controller
             return response()->json($response);
         }
 
-        $combination = $this->permutationofString($request->name);
+        $combination = (new WordHelper())->permutationofString($request->name);
         try {
-            $client = new Client();
-            $response = $client->request('GET', 'https://wordcollectanswers.com/en/?letters=' . $request->name);
-            $statusCode = $response->getStatusCode();
-            $content = $response->getBody()->getContents();
-            $crawler = new Crawler($content);
-            $divContent = $crawler->filter('.words')->html();
-            $text_array = explode("<br>", preg_replace('/\d+\.\s*/', '', $divContent));
-            $result = array_map(function ($item) {
-                return strip_tags($item);
-            }, $text_array);
-
+            $result =  $wordRequest->wordRequest($request->name);
             if (! empty($result)) {
                 $word_combination = new wordsCombination();
                 $word_combination->result_words = implode(', ', $result);
@@ -71,42 +60,5 @@ class WordCombinationController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
-    }
-
-    public function permutationofString($string)
-    {
-        $data_array = [];
-
-        function permute($str, $l, $r, &$perms)
-        {
-            if ($l == $r) {
-                $perms[] = $str;
-            } else {
-                for ($i = $l; $i <= $r; $i ++) {
-                    $str = swapPositions($str, $l, $i);
-                    permute($str, $l + 1, $r, $perms);
-                    $str = swapPositions($str, $l, $i); // backtrack
-                }
-            }
-        }
-
-        function swapPositions($str, $i, $j)
-        {
-            $temp = $str[$i];
-            $str[$i] = $str[$j];
-            $str[$j] = $temp;
-            return $str;
-        }
-
-        $perms = [];
-        permute($string, 0, strlen($string) - 1, $perms);
-
-        // Ensure unique permutations only, just in case
-        $perms = array_unique($perms);
-
-        foreach ($perms as $perm) {
-            $data_array[] = $perm;
-        }
-        return $data_array;
     }
 }
