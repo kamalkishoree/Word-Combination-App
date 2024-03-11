@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class wordsCombination extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "result_words"
+    ];
 }

@@ -10,7 +10,8 @@ use App\Services\WordRequestService;
 
 class WordCombinationController extends Controller
 {
-//controller
+
+    // controller
     public function wordCollection(Request $request, WordRequestService $wordRequest)
     {
         $request->validate([
@@ -33,18 +34,20 @@ class WordCombinationController extends Controller
 
         $combination = (new WordHelper())->permutationofString($request->name);
         try {
-            $result =  $wordRequest->wordRequest($request->name);
+            $result = $wordRequest->wordRequest($request->name);
             if (! empty($result)) {
-                $word_combination = new wordsCombination();
-                $word_combination->result_words = implode(', ', $result);
-                if ($word_combination->save()) {
-                    $search_word = new SearchWordQuery();
-                    $search_word->search_word = $request->name;
-                    $search_word->word_length = strlen($request->name);
-                    $search_word->permutation = implode(', ', $combination);
-                    $search_word->words_combinations_id = $word_combination->id;
-
-                    if ($search_word->save()) {
+                $word_combination = wordsCombination::create([
+                    "result_words" => implode(', ', $result)
+                ]);
+                if ($word_combination) {
+                    $search_word_data = [
+                        "search_word" => $request->name,
+                        "word_length" => strlen($request->name),
+                        "permutation" => implode(', ', $combination),
+                        "words_combinations_id" => $word_combination->id
+                    ];
+                    $search_word = SearchWordQuery::create($search_word_data);
+                    if ($search_word) {
                         $response = [
                             'search_word' => $request->name,
                             'word_combination' => explode(',', $word_combination->result_words),
