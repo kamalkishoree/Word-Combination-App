@@ -10,7 +10,7 @@ use App\Services\WordRequestService;
 
 class WordCombinationController extends Controller
 {
-
+//controller
     public function wordCollection(Request $request, WordRequestService $wordRequest)
     {
         $request->validate([
