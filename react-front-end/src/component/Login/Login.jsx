@@ -45,7 +45,7 @@ const Login = () => {
 	useEffect(() => {
 		if (Object.keys(formErrors).length === 0 && isSubmit) {
 			console.log(user);
-			axios.post("http://localhost:8000/api/login", user).then((res) => {
+			axios.post(import.meta.env.VITE_BACKEND_URL+"/api/login", user).then((res) => {
 				console.log(res);
 				alert(res.data.message);
 				if (res.status == 401) {

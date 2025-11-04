@@ -29,7 +29,7 @@ const Profile = () => {
         },
       };
       axios
-        .post("http://localhost:8000/api/logout", {}, config)
+        .post(import.meta.env.VITE_BACKEND_URL+"/api/logout", {}, config)
         .then((res) => {
           alert(res.data.message);
           navigate("/login", { replace: true });

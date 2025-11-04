@@ -66,7 +66,7 @@ const Register = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(user);
-      axios.post("http://localhost:8000/api/register", user).then((res) => {
+      axios.post(import.meta.env.VITE_BACKEND_URL+"/api/register", user).then((res) => {
         alert(res.data.message);
         if (res.data.status == 500) {
           return false;

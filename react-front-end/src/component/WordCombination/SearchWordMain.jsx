@@ -23,7 +23,7 @@ export default function SearchWord() {
       },
     };
     await axios
-      .post(`http://localhost:8000/api/words-combo`, formData, config)
+      .post(import.meta.env.VITE_BACKEND_URL+"/api/words-combo", formData, config)
       .then(({ data }) => {
         navigate("/seach_result", {
           state: {
